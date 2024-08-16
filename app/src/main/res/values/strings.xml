@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Jiburi</string>
+    <string name="filmItemImage">filmImage</string>
+    <string name="can_not_find_img">can not find img</string>
+    <string name="go_back_button">go back button</string>
+    <string name="detail_score">detail_score</string>
+</resources>
