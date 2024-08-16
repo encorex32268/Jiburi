@@ -54,7 +54,6 @@ class MainActivity : ComponentActivity() {
                             )
                         ){
                             val arguments = it.toRoute<FilmDetailRoute>()
-                            println("${arguments.film}")
                             DetailScreenRoot(
                                 film = arguments.film,
                                 navController = navController
