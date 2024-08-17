@@ -21,7 +21,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
     }
+
 
     buildTypes {
         release {
@@ -81,7 +83,9 @@ dependencies {
 
     implementation(libs.navigation.compose)
 
-
+    testImplementation(libs.android.test.core)
+    testImplementation(libs.android.test.core.ktx)
+    testImplementation(libs.google.truth)
 
 
 }

@@ -8,7 +8,8 @@ import com.lihan.jiburi.data.local.entity.FilmEntity
 
 @Database(
     entities = [ FilmEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class JiburiRoomDatabase : RoomDatabase(){
     abstract val filmDao: FilmDao
