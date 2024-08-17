@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class FilmsViewModel(
-    private val savedStateHandle: SavedStateHandle,
     private val filmsRepository: FilmsRepository
 ): ViewModel() {
 
@@ -27,6 +26,18 @@ class FilmsViewModel(
     val uiEvent = _uiEvent.receiveAsFlow()
 
     init {
+       onAction(FilmAction.GetData)
+    }
+
+    fun onAction(action: FilmAction) {
+        when(action){
+            FilmAction.GetData -> {
+                getData()
+            }
+        }
+    }
+
+    private fun getData() {
         viewModelScope.launch {
             _state.update {
                 it.copy(
@@ -37,10 +48,12 @@ class FilmsViewModel(
                 is Result.Error ->{
                     _state.update {
                         it.copy(
-                            errorMessage = result.error.name,
                             isLoading = false
                         )
                     }
+                    _uiEvent.send(
+                        FilmsUiEvent.ApiError(result.error.name)
+                    )
                 }
                 is Result.Success -> {
                     _state.update {
@@ -53,5 +66,4 @@ class FilmsViewModel(
             }
         }
     }
-
 }
