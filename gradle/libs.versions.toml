@@ -52,6 +52,7 @@ navigation-compose =  { module = "androidx.navigation:navigation-compose" , vers
 android-test-core = { module = "androidx.test:core" , version.ref = "androidTest"}
 android-test-core-ktx = { module = "androidx.test:core-ktx" , version.ref = "androidTest"}
 google-truth = { module = "com.google.truth:truth" , version.ref = "googleTruth"}
+kotlin-corutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" , version = "1.8.1"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

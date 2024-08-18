@@ -1,4 +1,4 @@
-package com.lihan.jiburi.data.repository
+package com.lihan.jiburi.data
 
 import com.lihan.jiburi.data.model.FilmDto
 import com.lihan.jiburi.data.network.get
@@ -29,7 +29,7 @@ class FakeFilmRemoteDataSource: FilmDataSource {
         }
     }
 
-    fun getFilmsDto(): List<FilmDto>{
+    private fun getFilmsDto(): List<FilmDto>{
         return (0..20).map {
             FilmDto(
                 id = "idTest${it}",

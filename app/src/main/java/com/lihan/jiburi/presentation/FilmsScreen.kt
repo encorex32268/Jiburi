@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.lihan.jiburi.domain.model.Film
@@ -98,15 +99,20 @@ fun FilmsScreen(
        when{
            state.isLoading                           ->{
                CircularProgressIndicator(
-                   modifier = Modifier.size(48.dp)
+                   modifier = Modifier
+                       .size(48.dp)
+                       .testTag("FilmScreenLoading")
                )
            }
            !state.isLoading && state.items.isEmpty() -> {
                Column(
+                   modifier = Modifier.testTag("FilmScreenNoData"),
                    horizontalAlignment = Alignment.CenterHorizontally
                ){
                    Text(text = "No Data , or some error happened")
-                   Button(onClick ={
+                   Button(
+                       modifier = Modifier.testTag("FilmScreenRetry"),
+                       onClick ={
                        onAction(FilmAction.GetData)
                    }) {
                        Text(text = "Retry")
@@ -115,6 +121,7 @@ fun FilmsScreen(
            }
            else ->{
                LazyVerticalGrid(
+                   modifier = Modifier.testTag("FilmScreenList"),
                    columns = GridCells.Fixed(count = 2),
                    verticalArrangement = Arrangement.spacedBy(2.dp),
                    horizontalArrangement = Arrangement.spacedBy(2.dp)
