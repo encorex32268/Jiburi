@@ -1,8 +1,7 @@
 
 # Jubiri App（ジブリアプリ）
----
 ## 📄 Description（應用程式簡介）
-這是一個專門展示**吉卜力工作室（Studio Ghibli）**系列電影資訊的應用程式。它旨在提供一個簡潔、美觀的介面，讓使用者能夠輕鬆瀏覽和了解經典吉卜力電影的詳細資料。
+這是一個專門展示 吉卜力工作室（Studio Ghibli）系列電影資訊的應用程式。它旨在提供一個簡潔、美觀的介面，讓使用者能夠輕鬆瀏覽和了解經典吉卜力電影的詳細資料。
 
 ## 🛠 Technology Stack（技術棧）
 此應用程式主要使用 Kotlin 語言開發，並採用以下領先的 Android 技術和架構組件：
@@ -19,16 +18,13 @@
 電影列表瀏覽。
 電影詳細資訊。
 
-## Resource（資料來源）
-所有電影資料皆透過以下公開 API 取得：
+## 🔗 Resource（資料來源）
+所有電影資料皆透過以下公開 API 取得
 Ghibli API： https://ghibliapi.vercel.app/
 
-## Screenshots
+## ✨ Screenshots
 <div style="display: flex; gap: 32px;">
-
 <img src="https://github.com/encorex32268/Jiburi/blob/master/screenshots/home_screenshot.png"  width="240" height="480">
 <img src="https://github.com/encorex32268/Jiburi/blob/master/screenshots/detail_screenshot_1.png" width="240" height="480">
 <img src="https://github.com/encorex32268/Jiburi/blob/master/screenshots/detail_screenshot_2.png"  width="240" height="480">
-<img src="https://github.com/encorex32268/Jiburi/blob/master/screenshots/screenshot_light_detail2.png" width="240" height="480">
-
 </div>
