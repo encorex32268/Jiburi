@@ -3,22 +3,18 @@
 package com.lihan.jiburi.presentation
 
 import com.google.common.truth.Truth
-import com.lihan.jiburi.data.repository.FakeFilmRemoteDataSource
+import com.lihan.jiburi.data.repository.FakeFilmRemoteRemoteDataSource
 import com.lihan.jiburi.data.repository.FakeFilmsRepositoryImpl
 import com.lihan.jiburi.data.repository.FakeLocalFilmDataSource
-import com.lihan.jiburi.domain.mapper.toFilm
+import com.lihan.jiburi.film.data.mapper.toFilm
+import com.lihan.jiburi.film.presentation.FilmsViewModel
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.TestCoroutineDispatcher
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import okhttp3.internal.wait
 
 import org.junit.Before
 import org.junit.Test
@@ -27,7 +23,7 @@ class FilmsViewModelTest {
 
     private lateinit var viewModel: FilmsViewModel
     private lateinit var fakeFilmsRepositoryImpl: FakeFilmsRepositoryImpl
-    private lateinit var fakeFilmRemoteDataSource: FakeFilmRemoteDataSource
+    private lateinit var fakeFilmRemoteDataSource: FakeFilmRemoteRemoteDataSource
     private lateinit var fakeLocalFilmDataSource: FakeLocalFilmDataSource
 
     @Before
@@ -37,7 +33,7 @@ class FilmsViewModelTest {
 
     @Test
     fun `init get data`() = runTest{
-        fakeFilmRemoteDataSource = FakeFilmRemoteDataSource().apply {
+        fakeFilmRemoteDataSource = FakeFilmRemoteRemoteDataSource().apply {
             isSuccess = true
         }
         fakeLocalFilmDataSource = FakeLocalFilmDataSource()

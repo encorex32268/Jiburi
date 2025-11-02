@@ -1,31 +1,21 @@
 package com.lihan.jiburi.presentation
 
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.isDisplayed
-import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
-import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.lihan.jiburi.MainActivity
-import com.lihan.jiburi.data.FakeFilmRemoteDataSource
+import com.lihan.jiburi.data.FakeFilmRemoteRemoteDataSource
 import com.lihan.jiburi.data.FakeFilmsRepositoryImpl
 import com.lihan.jiburi.data.FakeLocalFilmDataSource
-import com.lihan.jiburi.data.model.FilmDto
-import com.lihan.jiburi.domain.model.Film
+import com.lihan.jiburi.film.domain.model.Film
+import com.lihan.jiburi.film.presentation.FilmsScreen
+import com.lihan.jiburi.film.presentation.FilmsState
+import com.lihan.jiburi.film.presentation.FilmsViewModel
 import com.lihan.jiburi.ui.theme.JiburiTheme
-import org.junit.Assert.*
 
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.androidx.compose.koinViewModel
 
 class FilmsScreenKtTest {
 
@@ -80,12 +70,12 @@ class FilmsScreenKtTest {
 
     @Test
     fun checkFilmListScreenNoDataRetry(){
-        val fakeFilmRemote = FakeFilmRemoteDataSource().apply {
+        val fakeFilmRemote = FakeFilmRemoteRemoteDataSource().apply {
             isSuccess = false
         }
         val viewModel = FilmsViewModel(
             filmsRepository = FakeFilmsRepositoryImpl(
-                filmRemoteDataSource =  fakeFilmRemote,
+                filmRemoteDataSource = fakeFilmRemote,
                 localFilmDataSource = FakeLocalFilmDataSource()
             )
         )

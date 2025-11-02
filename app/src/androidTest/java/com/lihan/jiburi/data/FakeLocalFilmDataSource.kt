@@ -1,16 +1,14 @@
 package com.lihan.jiburi.data
 
-import com.lihan.jiburi.data.local.dao.FilmDao
-import com.lihan.jiburi.data.local.entity.FilmEntity
-import com.lihan.jiburi.domain.mapper.toFilm
-import com.lihan.jiburi.domain.mapper.toFilmEntity
-import com.lihan.jiburi.domain.model.Film
-import com.lihan.jiburi.domain.repository.LocalFilmDataSource
-import com.lihan.jiburi.domain.util.DataError
-import com.lihan.jiburi.domain.util.Result
+import com.lihan.jiburi.core.data.local.entity.FilmEntity
+import com.lihan.jiburi.film.data.mapper.toFilm
+import com.lihan.jiburi.film.data.mapper.toFilmEntity
+import com.lihan.jiburi.film.domain.model.Film
+import com.lihan.jiburi.core.data.local.LocalFilmDataSource
+import com.lihan.jiburi.core.domain.util.DataError
+import com.lihan.jiburi.core.domain.util.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import java.sql.SQLException
 
 class FakeLocalFilmDataSource : LocalFilmDataSource {

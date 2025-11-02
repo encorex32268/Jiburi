@@ -1,8 +1,8 @@
 package com.lihan.jiburi.data.repository
 
 import com.google.common.truth.Truth
-import com.lihan.jiburi.domain.repository.FilmsRepository
-import com.lihan.jiburi.domain.util.Result
+import com.lihan.jiburi.film.domain.repository.FilmsRepository
+import com.lihan.jiburi.core.domain.util.Result
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
@@ -11,12 +11,12 @@ import org.junit.Test
 class FilmsRepositoryImplTest {
 
     private lateinit var filmsRepository: FilmsRepository
-    private lateinit var fakeFilmRemoteDataSource: FakeFilmRemoteDataSource
+    private lateinit var fakeFilmRemoteDataSource: FakeFilmRemoteRemoteDataSource
     private lateinit var fakeLocalFilmDataSource: FakeLocalFilmDataSource
 
     @Before
     fun setUp() {
-        fakeFilmRemoteDataSource = FakeFilmRemoteDataSource()
+        fakeFilmRemoteDataSource = FakeFilmRemoteRemoteDataSource()
         fakeLocalFilmDataSource = FakeLocalFilmDataSource()
         filmsRepository = FakeFilmsRepositoryImpl(
             filmRemoteDataSource = fakeFilmRemoteDataSource,

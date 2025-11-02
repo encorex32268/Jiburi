@@ -1,15 +1,15 @@
 package com.lihan.jiburi.data.repository
 
-import com.lihan.jiburi.domain.model.Film
-import com.lihan.jiburi.domain.repository.FilmDataSource
-import com.lihan.jiburi.domain.repository.FilmsRepository
-import com.lihan.jiburi.domain.repository.LocalFilmDataSource
-import com.lihan.jiburi.domain.util.DataError
-import com.lihan.jiburi.domain.util.Result
+import com.lihan.jiburi.film.domain.model.Film
+import com.lihan.jiburi.core.data.remote.FilmRemoteDataSource
+import com.lihan.jiburi.film.domain.repository.FilmsRepository
+import com.lihan.jiburi.core.data.local.LocalFilmDataSource
+import com.lihan.jiburi.core.domain.util.DataError
+import com.lihan.jiburi.core.domain.util.Result
 import kotlinx.coroutines.flow.first
 
 class FakeFilmsRepositoryImpl(
-    private val filmRemoteDataSource: FilmDataSource,
+    private val filmRemoteDataSource: FilmRemoteDataSource,
     private val localFilmDataSource: LocalFilmDataSource
 ): FilmsRepository {
     override suspend fun getFilms(): Result<List<Film>, DataError.Network> {

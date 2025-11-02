@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.lihan.jiburi"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.lihan.jiburi"
@@ -67,7 +67,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.bundles.ktor)
     implementation(libs.bundles.koin.compose)
-    implementation(libs.coil.compose)
+    implementation(libs.coil3.compose)
+    implementation(libs.coil3.network)
+    implementation(libs.coil3)
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
