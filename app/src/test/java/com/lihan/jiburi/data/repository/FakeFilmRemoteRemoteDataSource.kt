@@ -12,10 +12,10 @@ class FakeFilmRemoteRemoteDataSource: FilmRemoteDataSource {
 
     var isSuccess: Boolean = false
 
-    override suspend fun getFilms(): Result<List<Film>, DataError.Network> {
+    override suspend fun getFilms(): Result<List<FilmDto>, DataError.Network> {
         return if (isSuccess){
             Result.Success(
-                getFilmsDto().map { it.toFilm() }
+                getFilmsDto()
             )
         }else{
             Result.Error(

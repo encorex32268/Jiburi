@@ -84,16 +84,6 @@ fun DescriptionSection(
             )
         )
 
-        Text(
-            text = film.director,
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Text(
-            text = film.producer,
-            style = MaterialTheme.typography.bodyMedium
-        )
-
-
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically

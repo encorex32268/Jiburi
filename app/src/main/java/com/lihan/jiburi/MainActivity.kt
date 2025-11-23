@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.lihan.jiburi.core.presentation.navigation.FilmDetailRoute
 import com.lihan.jiburi.core.presentation.navigation.FilmListRoute
 import com.lihan.jiburi.film.presentation.FilmScreenRoot
@@ -61,10 +60,7 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable<FilmDetailRoute>{
-                            val arguments = it.toRoute<FilmDetailRoute>()
-                            val filmId = arguments.id
                             DetailScreenRoot(
-                                filmId = filmId,
                                 onBack = {
                                     navController.navigateUp()
                                 }

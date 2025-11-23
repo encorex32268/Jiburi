@@ -22,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,26 +42,16 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun DetailScreenRoot(
-    filmId: String,
     viewModel: DetailViewModel = koinViewModel(),
     onBack: () -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    LaunchedEffect(filmId) {
-        state.film?.let { currentFilm ->
-            if (currentFilm.id != filmId){
-                viewModel.onAction(DetailAction.ReloadFilm(filmId))
-            }
-        }?:run {
-            viewModel.onAction(DetailAction.ReloadFilm(filmId))
-        }
-    }
+
     DetailScreen(
         state = state,
         onAction = { action ->
             when(action){
                 DetailAction.OnBack -> onBack()
-                else -> Unit
             }
         }
     )
@@ -83,13 +72,12 @@ fun DetailScreen(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(bottomStart = 12.dp, bottomEnd = 12.dp))
+                .clip(RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
         ){
             SubcomposeAsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .aspectRatio(0.66f)
-                ,
+                    .aspectRatio(0.70f),
                 model = state.film?.imgUrl,
                 contentDescription = stringResource(id = R.string.filmItemImage),
                 loading = {
@@ -99,7 +87,7 @@ fun DetailScreen(
                         contentScale = ContentScale.FillBounds
                     )
                 },
-                contentScale = ContentScale.Fit,
+                contentScale = ContentScale.Crop,
             )
             IconButton(
                 modifier = Modifier

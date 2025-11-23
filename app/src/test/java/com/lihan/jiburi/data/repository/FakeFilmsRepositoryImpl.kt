@@ -6,6 +6,7 @@ import com.lihan.jiburi.film.domain.repository.FilmsRepository
 import com.lihan.jiburi.core.data.local.LocalFilmDataSource
 import com.lihan.jiburi.core.domain.util.DataError
 import com.lihan.jiburi.core.domain.util.Result
+import com.lihan.jiburi.film.data.mapper.toFilm
 import kotlinx.coroutines.flow.first
 
 class FakeFilmsRepositoryImpl(
@@ -24,8 +25,9 @@ class FakeFilmsRepositoryImpl(
             }
 
             is Result.Success -> {
-                localFilmDataSource.upsertFilms(result.data)
-                Result.Success(result.data)
+                val data = result.data.map { it.toFilm() }
+                localFilmDataSource.upsertFilms(data)
+                Result.Success(result.data.map { it.toFilm() })
             }
         }
     }
