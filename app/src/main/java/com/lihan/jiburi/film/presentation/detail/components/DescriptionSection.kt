@@ -1,16 +1,20 @@
 package com.lihan.jiburi.film.presentation.detail.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -22,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
@@ -59,7 +64,7 @@ fun DescriptionSection(
                 modifier = Modifier.alignByBaseline(),
                 text = film.title,
                 style = MaterialTheme.typography.titleLarge.copy(
-                    fontWeight = FontWeight.SemiBold
+                    fontWeight = FontWeight.Bold
                 )
             )
             Text(
@@ -67,7 +72,8 @@ fun DescriptionSection(
                 text = film.releaseDate,
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontSize = 14.sp,
-                    color = Color.DarkGray
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.SemiBold
                 )
             )
         }
@@ -86,20 +92,28 @@ fun DescriptionSection(
 
         Row(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ){
-            IconLabel(
+            IconCard(
+                text = film.runningTime + " minutes",
                 imageVector = ImageVector.vectorResource(R.drawable.clock),
-                text = film.runningTime + " minutes"
-            )
-            IconLabel(
-                imageVector = Icons.Default.ThumbUp,
-                text = film.score
+                tintColor = MaterialTheme.colorScheme.tertiary
+                )
+            IconCard(
+                text = film.score,
+                imageVector = Icons.Outlined.Star,
+                tintColor = Color.Yellow
             )
         }
         Text(
+            modifier = Modifier
+                .clip(RoundedCornerShape(8.dp))
+                .fillMaxWidth()
+                .background(Color.LightGray.copy(alpha = 0.2f))
+                .padding(8.dp)
+            ,
             text = film.description,
-            style = MaterialTheme.typography.bodyMedium.copy(
+            style = MaterialTheme.typography.bodySmall.copy(
                 fontWeight = FontWeight.Normal
             ),
             maxLines = if (isExpandDescription) Int.MAX_VALUE else 3,

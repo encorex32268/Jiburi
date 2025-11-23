@@ -78,11 +78,11 @@ fun DetailScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(0.70f),
-                model = state.film?.imgUrl,
+                model = state.film?.imgUrl?.ifEmpty { R.drawable.preview_image },
                 contentDescription = stringResource(id = R.string.filmItemImage),
                 loading = {
                     Image(
-                        painter = painterResource(id = R.drawable.preview_img),
+                        painter = painterResource(id = R.drawable.preview_image),
                         contentDescription = null,
                         contentScale = ContentScale.FillBounds
                     )
@@ -129,7 +129,7 @@ fun DetailScreenPreview() {
                     title = "Test234",
                     titleEn = "Film Title En ",
                     titleRoma = "Film Title Roma ",
-                    imgUrl = "imgUrl ",
+                    imgUrl = "",
                     imgUrlBanner = "imgUrlBanner ",
                     description = "description .. ",
                     director = "director",

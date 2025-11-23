@@ -15,6 +15,6 @@ val filmsModule = module {
     singleOf(::FilmsRepositoryImpl).bind<FilmsRepository>()
     viewModel { FilmsViewModel(get()) }
     singleOf(::DetailRepositoryImpl).bind<DetailRepository>()
-    viewModel { DetailViewModel(get()) }
+    viewModel { DetailViewModel(get(),get()) }
 
 }
