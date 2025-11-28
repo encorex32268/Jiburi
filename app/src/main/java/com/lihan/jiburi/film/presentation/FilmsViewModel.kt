@@ -32,29 +32,32 @@ class FilmsViewModel(
 
     fun onAction(action: FilmsAction) {
         when (action) {
-            FilmsAction.ReloadData -> getData()
+            FilmsAction.ReloadData -> getData(forceFetch = true)
         }
     }
 
-    private fun getData() {
+    private fun getData(forceFetch: Boolean = false) {
         viewModelScope.launch(Dispatchers.IO) {
             _state.update { it.copy(isLoading = true) }
-            when (val result = filmsRepository.getFilms()) {
+            val result = filmsRepository.getFilms(forceFetch)
+
+            when (result) {
                 is Result.Error -> {
                     _uiEvent.send(
                         FilmsUiEvent.ApiError(result.error.name)
                     )
+                    _state.update { it.copy(isLoading = false) }
                 }
 
                 is Result.Success -> {
                     _state.update {
                         it.copy(
+                            isLoading = false,
                             items = result.data
                         )
                     }
                 }
             }
-            _state.update { it.copy(isLoading = false) }
         }
     }
 }
