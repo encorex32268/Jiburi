@@ -8,16 +8,17 @@
 此應用程式主要使用 Kotlin 語言開發，並採用以下 Android 技術和架構組件：
 
 - Ktor：用於高效能、非同步的網路請求，負責從 API 取得電影資料。
-- Room Database : 本地裝置儲存。 
+- Room Database：本地裝置儲存。
 - Coil：輕量級且快速的圖片載入函式庫，用於處理電影海報和相關圖片的顯示。
 - Koin：實用的依賴注入（Dependency Injection, DI）框架。
-- Navigation： 處理應用程式內所有畫面之間的導航。
+- Navigation：處理應用程式內所有畫面之間的導航。
 - Compose UI (Jetpack Compose)：使用現代化的聲明式 UI 框架來構建應用程式介面。
-- MVI Achtechare (Model-View-Intent)：採用的架構模式，確保狀態管理清晰、可預測和單向數據流。
+- MVI Architecture (Model-View-Intent)：採用的架構模式，確保狀態管理清晰、可預測和單向數據流。
 
 ## 💡 Key Features（主要功能）
 電影列表瀏覽。
 電影詳細資訊。
+離線瀏覽支援 (Offline Support)。
 
 ## 🔗 Resource（資料來源）
 所有電影資料皆透過以下公開 API 取得
