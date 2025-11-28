@@ -5,5 +5,5 @@ import com.lihan.jiburi.core.domain.util.Result
 import com.lihan.jiburi.film.domain.model.Film
 
 interface FilmsRepository {
-    suspend fun getFilms(): Result<List<Film>, DataError.Network>
+    suspend fun getFilms(forceFetch: Boolean = false): Result<List<Film>, DataError.Network>
 }
