@@ -13,22 +13,28 @@ class FakeFilmsRepositoryImpl(
     private val filmRemoteDataSource: FilmRemoteDataSource,
     private val localFilmDataSource: LocalFilmDataSource
 ): FilmsRepository {
-    override suspend fun getFilms(): Result<List<Film>, DataError.Network> {
-        return when(val result = filmRemoteDataSource.getFilms()){
-            is Result.Error -> {
-                val localData = localFilmDataSource.getFilms().first()
-                if (localData.isEmpty()){
-                    Result.Error(result.error)
-                }else{
-                    Result.Success(localData)
+    override suspend fun getFilms(forceFetch: Boolean): Result<List<Film>, DataError.Network> {
+        val localData = localFilmDataSource.getFilms().first()
+        val shouldFetch = localData.isEmpty() || forceFetch
+
+        return if (shouldFetch) {
+            when(val result = filmRemoteDataSource.getFilms()){
+                is Result.Error -> {
+                    if (localData.isNotEmpty()){
+                        Result.Success(localData)
+                    }else{
+                        Result.Error(result.error)
+                    }
+                }
+
+                is Result.Success -> {
+                    val data = result.data.map { it.toFilm() }
+                    localFilmDataSource.upsertFilms(data)
+                    Result.Success(data)
                 }
             }
-
-            is Result.Success -> {
-                val data = result.data.map { it.toFilm() }
-                localFilmDataSource.upsertFilms(data)
-                Result.Success(result.data.map { it.toFilm() })
-            }
+        } else {
+            Result.Success(localData)
         }
     }
 }

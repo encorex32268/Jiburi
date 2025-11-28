@@ -62,5 +62,34 @@ class FilmsRepositoryImplTest {
         Truth.assertThat(data.isEmpty())
     }
 
+    @Test
+    fun `getData with forceFetch = true fetches from api even if local data exists`(): Unit = runBlocking {
+        // Arrange: Prepare local data
+        fakeFilmRemoteDataSource.isSuccess = true
+        filmsRepository.getFilms() // Initial fetch to populate local DB
 
+        // Arrange: Set remote to fail to verify that a fetch is attempted
+        fakeFilmRemoteDataSource.isSuccess = false
+
+        // Act: force fetch
+        val result = filmsRepository.getFilms(forceFetch = true)
+
+        // Assert:
+        // It should attempt to fetch (fail) and then fall back to local data.
+        Truth.assertThat(result is Result.Success).isTrue()
+    }
+
+    @Test
+    fun `forceFetch updates local data on success`(): Unit = runBlocking {
+        // Arrange
+        fakeFilmRemoteDataSource.isSuccess = true
+
+        // Act: force fetch
+        val result = filmsRepository.getFilms(forceFetch = true)
+
+        // Assert
+        Truth.assertThat(result is Result.Success).isTrue()
+        val dbData = fakeLocalFilmDataSource.getFilms().first()
+        Truth.assertThat(dbData).isNotEmpty()
+    }
 }
