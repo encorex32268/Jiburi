@@ -3,6 +3,8 @@ package com.lihan.jiburi.film.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.lihan.jiburi.core.domain.util.Result
+import com.lihan.jiburi.core.domain.util.onError
+import com.lihan.jiburi.core.domain.util.onSuccess
 import com.lihan.jiburi.film.domain.repository.FilmsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -37,27 +39,25 @@ class FilmsViewModel(
     }
 
     private fun getData(forceFetch: Boolean = false) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
-            val result = filmsRepository.getFilms(forceFetch)
 
-            when (result) {
-                is Result.Error -> {
-                    _uiEvent.send(
-                        FilmsUiEvent.ApiError(result.error.name)
-                    )
-                    _state.update { it.copy(isLoading = false) }
-                }
-
-                is Result.Success -> {
+            filmsRepository
+                .getFilms(forceFetch)
+                .onSuccess { data ->
                     _state.update {
                         it.copy(
                             isLoading = false,
-                            items = result.data
+                            items = data
                         )
                     }
                 }
-            }
+                .onError {  error ->
+                    _uiEvent.send(FilmsUiEvent.ApiError(error.name))
+                    _state.update { it.copy(
+                        isLoading = false)
+                    }
+                }
         }
     }
 }

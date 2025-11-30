@@ -16,10 +16,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -30,26 +34,34 @@ import com.lihan.jiburi.core.presentation.uitl.ObserveEvent
 import com.lihan.jiburi.film.domain.model.Film
 import com.lihan.jiburi.film.presentation.components.FilmItem
 import com.lihan.jiburi.ui.theme.JiburiTheme
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun FilmScreenRoot(
     viewModel: FilmsViewModel = koinViewModel(),
-    onGoToDetail: (id: String) -> Unit = {},
-    onShowError: (String) -> Unit = {}
+    onGoToDetail: (id: String) -> Unit = {}
 ){
     val state by viewModel.state.collectAsStateWithLifecycle()
 
+    val scope = rememberCoroutineScope()
+    val snackbarState = remember { SnackbarHostState() }
+
     ObserveEvent(viewModel.uiEvent) { uiEvent ->
         when(uiEvent){
-            is FilmsUiEvent.ApiError -> onShowError(uiEvent.errorMessage)
+            is FilmsUiEvent.ApiError -> {
+                scope.launch {
+                    snackbarState.showSnackbar(uiEvent.errorMessage)
+                }
+            }
         }
     }
 
     FilmsScreen(
         state = state,
         onItemClick = onGoToDetail,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
+        snackbarState = snackbarState
     )
 
 }
@@ -57,8 +69,9 @@ fun FilmScreenRoot(
 @Composable
 fun FilmsScreen(
     state: FilmsState,
+    snackbarState: SnackbarHostState,
     onItemClick: (id: String) -> Unit = {},
-    onAction: (FilmsAction) -> Unit = {}
+    onAction: (FilmsAction) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
@@ -70,7 +83,8 @@ fun FilmsScreen(
                     )
                 }
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(snackbarState) }
     ){
         Column(
             modifier = Modifier.fillMaxSize().padding(it),
@@ -88,7 +102,8 @@ fun FilmsScreen(
                 !state.isLoading && state.items.isEmpty() -> {
                     Column(
                         modifier = Modifier.testTag("FilmScreenNoData"),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
                     ){
                         Text(text = "No Data , or some error happened")
                         Button(
@@ -106,7 +121,7 @@ fun FilmsScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
                             .testTag("FilmScreenList"),
-                        verticalArrangement = Arrangement.spacedBy(18.dp),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
                         items(state.items){ item ->
                             FilmItem(
@@ -137,6 +152,7 @@ fun FilmsScreen(
 fun FilmsScreenPreview() {
     JiburiTheme {
         FilmsScreen(
+            snackbarState = remember { SnackbarHostState() },
             state = FilmsState(
                 items = (0..50).map {
                     Film(

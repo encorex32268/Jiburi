@@ -18,6 +18,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -81,10 +82,8 @@ fun DetailScreen(
                 model = state.film?.imgUrl?.ifEmpty { R.drawable.preview_image },
                 contentDescription = stringResource(id = R.string.filmItemImage),
                 loading = {
-                    Image(
-                        painter = painterResource(id = R.drawable.preview_image),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 },
                 contentScale = ContentScale.Crop,
@@ -109,8 +108,10 @@ fun DetailScreen(
             }
 
         }
-        state.film?.let {
-            DescriptionSection(it)
+        if (state.film != null){
+            DescriptionSection(
+                film = state.film
+            )
         }
     }
 

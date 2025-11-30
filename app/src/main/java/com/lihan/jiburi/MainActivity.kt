@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -26,20 +27,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JiburiTheme {
-                val scope = rememberCoroutineScope()
                 val navController = rememberNavController()
-                val snackBarHostState = remember {
-                    SnackbarHostState()
-                }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                    containerColor = MaterialTheme.colorScheme.background,
-                    snackbarHost = {
-                        SnackbarHost(hostState = snackBarHostState)
-                    }
+                    containerColor = MaterialTheme.colorScheme.background
                 ) { it ->
                     NavHost(
+                        modifier = Modifier.fillMaxSize().padding(it),
                         navController = navController,
                         startDestination = FilmListRoute
                     ){
@@ -49,13 +44,6 @@ class MainActivity : ComponentActivity() {
                                     navController.navigate(
                                         route = FilmDetailRoute(id = id)
                                     )
-                                },
-                                onShowError = {
-                                    scope.launch {
-                                        snackBarHostState.showSnackbar(
-                                            message = it
-                                        )
-                                    }
                                 }
                             )
                         }
