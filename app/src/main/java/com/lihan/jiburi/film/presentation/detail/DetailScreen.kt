@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -83,7 +84,10 @@ fun DetailScreen(
                 contentDescription = stringResource(id = R.string.filmItemImage),
                 loading = {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .align(Alignment.Center)
+
                     )
                 },
                 contentScale = ContentScale.Crop,

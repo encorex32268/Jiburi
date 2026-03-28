@@ -20,12 +20,14 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -79,15 +81,21 @@ fun FilmsScreen(
                 title = {
                     Text(
                         text = "スタジオジブリ作品",
-                        style = MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.displaySmall
                     )
-                }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.White,
+                )
             )
         },
+        containerColor = Color.White,
         snackbarHost = { SnackbarHost(snackbarState) }
-    ){
+    ){ paddingValues ->
         Column(
-            modifier = Modifier.fillMaxSize().padding(it),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = paddingValues.calculateTopPadding()),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ){
@@ -119,7 +127,7 @@ fun FilmsScreen(
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
+                            .padding(16.dp)
                             .testTag("FilmScreenList"),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
